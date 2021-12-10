@@ -9,7 +9,7 @@ email varchar2(30)
 );
 
 --컬럼명 수정 : alter table spmember rename column phpone2 to phone2;
-
+select * from board;
 select * from spmember
 select * from board order by num desc
 select * from reply;

@@ -44,4 +44,60 @@ public class MemberDao {
 		return sdto;
 	}
 
+	public int confirmID(String id) {
+		int result=0;
+		String sql= "select * from spmember where id=?";
+		con=dbm.getConnection();
+		try {
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs=pstmt.executeQuery();
+			if(rs.next()) result=1;
+			else result=-1;
+		} catch (SQLException e) {e.printStackTrace();
+		} finally {dbm.close(con, pstmt, rs);}
+		return result;
+	}
+
+	public int insertMember(SpMember sm) {
+		int result=0;
+		String sql= "insert into spmember(id, pw, name, phone1, phone2, phone3, email)"
+				+"value(?, ?, ?, ?, ?, ?, ?)";
+		con=dbm.getConnection();
+		try {
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, sm.getId());
+			pstmt.setString(2, sm.getPw());
+			pstmt.setString(3, sm.getName());
+			pstmt.setString(4, sm.getPhone1());
+			pstmt.setString(5, sm.getPhone2());
+			pstmt.setString(6, sm.getPhone3());
+			pstmt.setString(7, sm.getEmail());
+			result=pstmt.executeUpdate();
+		} catch (SQLException e) {e.printStackTrace();
+		} finally{dbm.close(con, pstmt, rs);}
+		
+		return result;
+	}
+
+	public int updateMember(SpMember sm) {
+		int result=0;
+		String sql= "update spmember set pw=?, name=?, phone1=?, phone2=?, phone3=?,"
+				+ " email=? where id=?";
+		con=dbm.getConnection();
+		try {
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, sm.getPw());
+			pstmt.setString(2, sm.getName());
+			pstmt.setString(3, sm.getPhone1());
+			pstmt.setString(4, sm.getPhone2());
+			pstmt.setString(5, sm.getPhone3());
+			pstmt.setString(6, sm.getEmail());
+			pstmt.setString(7, sm.getId());
+			result=pstmt.executeUpdate();
+		} catch (SQLException e) {e.printStackTrace();
+		} finally {dbm.close(con, pstmt, rs);}
+		return result;
+	}
+
 }
