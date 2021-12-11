@@ -34,7 +34,7 @@ public class MemberController {
 	}
 	//"redirect:/리퀘스트이름" -> 리퀘스트이름에 해당하는 매핑으로 이동
 	
-	@RequestMapping(value="/login", method = RequestMethod.POST)
+	@RequestMapping(value= "/login", method = RequestMethod.POST)
 	public String login(Model model, HttpServletRequest request ) {
 		
 		String url="loginform";
@@ -54,7 +54,7 @@ public class MemberController {
 			session.setAttribute("loginUser", sdto);
 			url="redirect:/main";   
 		}else {
-			model.addAttribute("message","알수없는 이유로 로그인하지 못했어요");
+			model.addAttribute("message", "알수없는 이유로 로그인하지 못했어요");
 		}
 		return url;
 	}
@@ -88,7 +88,7 @@ public class MemberController {
 		
 		//회원가입결과 성공여부에 따라서 message이름으로 "회원가입 성공. 로그인하세요",
 		//"회원가입 실패. 다음에 다시 시도하세요"를 Model에 담아주세요
-		if(result==1)model.addAttribute("message","회원가입 성공. 로그인하세요");
+		if(result == 1)model.addAttribute("message","회원가입 성공. 로그인하세요");
 		else model.addAttribute("message","회원가입 실패. 다음에 다시 시도하세요");
 		return "loginform";
 	}
@@ -105,7 +105,7 @@ public class MemberController {
 	@RequestMapping("/memberEditForm")
 	public String memberEditForm(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		if(session.getAttribute("loginUser")==null)
+		if(session.getAttribute("loginUser") == null)
 			return "loginform";
 		
 		return "member/memberEditForm";

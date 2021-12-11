@@ -20,11 +20,13 @@ function idCheck(){
 }
 	var id=document.frm.id.value;
 	var opt="toolbar=no, menubar=no, resizable=no, width=450, height=200";
-	window.open("idcheck?id=", "중복체크", opt);
+	window.open("idcheck?id=" +id, "중복체크", opt);
 	}
 	
-	function idok(){
-		
+	function idok(userid){
+		opener.frm.id.value=userid;
+		opener.frm.re_id.value=userid;
+		self.close();
 	}
 	
 	function joinCheck(){
@@ -63,7 +65,5 @@ function idCheck(){
 		return false;
 		}else{
 			return true;
-		  }
-		
-		
+		  }	
 		}

@@ -24,7 +24,7 @@ public class BoardController {
 	//Dao의 메서드에서 Service의 메서드로 리턴 -> Service 메서들에서 Controller 메서드로 리턴
 	//리턴받은 내용을 model에 싣고, ~.jsp로 이동
 	
-	@RequestMapping(value="/main")
+	@RequestMapping("/main")
 	public String main(Model model, HttpServletRequest request ) {		
 		
 		ArrayList<SpBoard>list=bs.selectBoard(); //게시물을 다 조회해서 list에 저장
@@ -33,7 +33,7 @@ public class BoardController {
 		return "main";
 	}
 	
-	@RequestMapping(value="/boardView")
+	@RequestMapping("/boardView")
 	public String boardView(Model model, HttpServletRequest request ) {
 		
 		String num=request.getParameter("num"); 
@@ -41,22 +41,32 @@ public class BoardController {
 		model.addAttribute("board",sb);
 		
 		ArrayList<ReplyVO>list=bs.selectReply(num);
-		model.addAttribute("board",sb);
+		model.addAttribute("replyList",list);
 			
 		return "board/boardView";
 	}
+	
 	@RequestMapping("/addReply")
 	public String add_reply(Model model, HttpServletRequest request) {
-		String boaardnum = request.getParameter("boardnum");
+		String boardnum = request.getParameter("boardnum");
 				ReplyVO rvo=new ReplyVO();
 				rvo.setUserid(request.getParameter("userid"));
-				rvo.setUserid(request.getParameter("userid"));
-				rvo.setUserid(request.getParameter("userid"));
+				rvo.setContent(request.getParameter("reply"));
+				rvo.setBoardnum(Integer.parseInt(boardnum));
 				bs.addReply(rvo);
-				return ""
+				return "readirect:/boardViewWithoutcount?num=" + boardnum;
 			
 	}
 	
+	@RequestMapping("/boardViewWithoutcount")
+	public String boardViewNextUpdate(Model model, HttpServletRequest request) {
+	String num = request.getParameter("num");
+	SpBoard sb = bs.getBoard(num);
+	model.addAttribute("board", sb);
+	ArrayList<ReplyVO> list=bs.selectReply(num);
+	model.addAttribute("replyList", list);
+	return "board/boardView";
+	}
 	
 	
 	

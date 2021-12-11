@@ -111,12 +111,12 @@ public class BoardDao {
 		String sql= "insert into reply(num, boardnum, userid, content)"
 				+"value(replt_seq.nextVal , ?, ?, ?)";
 		try {
-		con=dbm.getConnction();
+		con=dbm.getConnection();
 		pstmt=con.prepareStatement(sql);
 		pstmt.setInt(1, rvo.getBoardnum());
-		pstmt.setInt(2, rvo.getBoardnum());
-		pstmt.setInt(3, rvo.getBoardnum());
-		
+		pstmt.setString(2, rvo.getUserid());
+		pstmt.setString(3, rvo.getContent());
+		pstmt.executeUpdate();
 		} catch (SQLException e) {e.printStackTrace();
 		} finally {dbm.close(con, pstmt, rs);}
 	}

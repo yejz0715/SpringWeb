@@ -36,5 +36,9 @@ public class BoardService {
 		
 	}
 
+	public SpBoard getBoard(String num) {
+		return bdao.getBoard(num);
+	}
+
 	
 }
